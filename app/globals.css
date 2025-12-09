@@ -111,9 +111,10 @@ section {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 12px 18px;
+  padding: 10px 16px;
   border-radius: 12px;
   font-weight: 700;
+  font-size: 14px;
   letter-spacing: 0.2px;
   text-decoration: none;
   transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
@@ -265,6 +266,9 @@ section {
 
 .game-header-actions {
   margin-top: 16px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
 }
 
 .game-wrapper {
@@ -303,27 +307,30 @@ section {
 
 .game-start-content {
   text-align: center;
-  padding: 32px;
+  padding: 20px;
   background: rgba(255, 255, 255, 0.95);
   border-radius: 20px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
-  max-width: 400px;
+  max-width: 380px;
+  width: calc(100% - 40px);
+  margin: 20px;
 }
 
 .game-dog-icon {
-  font-size: 64px;
-  margin-bottom: 16px;
+  font-size: 40px;
+  margin-bottom: 8px;
 }
 
 .game-start-content h3 {
-  font-size: 24px;
+  font-size: 20px;
   color: var(--dark);
-  margin-bottom: 12px;
+  margin-bottom: 8px;
 }
 
 .game-start-content p {
   color: #4c3528;
-  margin-bottom: 20px;
+  margin-bottom: 12px;
+  font-size: 14px;
 }
 
 .nickname-input-wrapper {
@@ -356,15 +363,15 @@ section {
 }
 
 .game-stats {
-  margin: 20px 0;
-  padding: 16px;
+  margin: 12px 0;
+  padding: 10px;
   background: rgba(233, 196, 152, 0.2);
   border-radius: 12px;
 }
 
 .game-stats p {
-  margin: 8px 0;
-  font-size: 18px;
+  margin: 4px 0;
+  font-size: 15px;
   color: var(--dark);
 }
 
@@ -474,6 +481,32 @@ section {
 
   .game-wrapper {
     min-height: 280px;
+  }
+
+  .game-start-content {
+    padding: 16px;
+    max-width: calc(100% - 24px);
+    margin: 12px;
+  }
+
+  .game-start-content h3 {
+    font-size: 18px;
+    margin-bottom: 6px;
+  }
+
+  .game-dog-icon {
+    font-size: 36px;
+    margin-bottom: 6px;
+  }
+
+  .game-stats {
+    margin: 10px 0;
+    padding: 8px;
+  }
+
+  .game-stats p {
+    font-size: 13px;
+    margin: 3px 0;
   }
 
   .scoreboard-item {
