@@ -14,13 +14,6 @@ interface Platform {
   width: number
 }
 
-interface ScoreRecord {
-  nickname: string
-  time: number
-  steaks: number
-  date: string
-}
-
 export default function DogGame() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [steaksCollected, setSteaksCollected] = useState(0)
@@ -28,41 +21,10 @@ export default function DogGame() {
   const [gameOver, setGameOver] = useState(false)
   const [timeElapsed, setTimeElapsed] = useState(0)
   const [nickname, setNickname] = useState('')
-  const [showScoreboard, setShowScoreboard] = useState(false)
-  const [scoreboard, setScoreboard] = useState<ScoreRecord[]>([])
   const timerRef = useRef<NodeJS.Timeout | null>(null)
   const startTimeRef = useRef<number>(0)
   const nicknameRef = useRef<string>('')
-  const scoreboardRef = useRef<ScoreRecord[]>([])
   const timeUpdateRef = useRef<NodeJS.Timeout | null>(null)
-
-  // Load scoreboard from localStorage
-  useEffect(() => {
-    const saved = localStorage.getItem('hotdogfatcat-scores')
-    if (saved) {
-      try {
-        const parsed = JSON.parse(saved)
-        setScoreboard(parsed)
-        scoreboardRef.current = parsed
-      } catch (e) {
-        console.error('Failed to load scoreboard', e)
-      }
-    }
-  }, [])
-
-  // Save scoreboard to localStorage
-  const saveScore = (record: ScoreRecord) => {
-    const newScoreboard = [...scoreboardRef.current, record]
-      .sort((a, b) => {
-        // Sort by steaks (desc), then by time (asc)
-        if (b.steaks !== a.steaks) return b.steaks - a.steaks
-        return a.time - b.time
-      })
-      .slice(0, 10) // Keep top 10
-    scoreboardRef.current = newScoreboard
-    setScoreboard(newScoreboard)
-    localStorage.setItem('hotdogfatcat-scores', JSON.stringify(newScoreboard))
-  }
 
   useEffect(() => {
     if (!canvasRef.current || !gameStarted) return
@@ -249,21 +211,8 @@ export default function DogGame() {
         dog.y + dog.height > dogHome.y
       ) {
         // Game complete!
-        const finalTime = (Date.now() - startTimeRef.current) / 1000
-        const finalSteaks = currentSteaksCollected
-        
         if (timeUpdateRef.current) {
           clearInterval(timeUpdateRef.current)
-        }
-
-        // Save score if nickname provided
-        if (nicknameRef.current.trim()) {
-          saveScore({
-            nickname: nicknameRef.current.trim(),
-            time: finalTime,
-            steaks: finalSteaks,
-            date: new Date().toISOString(),
-          })
         }
 
         setGameOver(true)
@@ -443,11 +392,7 @@ export default function DogGame() {
   }, [gameStarted])
 
   const startGame = () => {
-    if (!nickname.trim()) {
-      alert('Please enter your nickname!')
-      return
-    }
-    nicknameRef.current = nickname
+    nicknameRef.current = nickname || 'Player'
     setGameStarted(true)
     setGameOver(false)
     setSteaksCollected(0)
@@ -479,35 +424,7 @@ export default function DogGame() {
           Collect as many steaks as possible and reach the dog home in the fastest time!
           Use arrow keys or WASD to move, Space or Up to jump.
         </p>
-        <div className="game-header-actions">
-          <button
-            className="btn btn-secondary"
-            onClick={() => setShowScoreboard(!showScoreboard)}
-          >
-            {showScoreboard ? 'Hide' : 'Show'} Scoreboard
-          </button>
-        </div>
       </div>
-
-      {showScoreboard && (
-        <div className="scoreboard-card">
-          <h3>🏆 Top Scores</h3>
-          {scoreboard.length === 0 ? (
-            <p className="scoreboard-empty">No scores yet. Be the first!</p>
-          ) : (
-            <div className="scoreboard-list">
-              {scoreboard.map((record, idx) => (
-                <div key={idx} className="scoreboard-item">
-                  <span className="scoreboard-rank">#{idx + 1}</span>
-                  <span className="scoreboard-name">{record.nickname}</span>
-                  <span className="scoreboard-steaks">{record.steaks} steaks</span>
-                  <span className="scoreboard-time">{formatTime(record.time)}</span>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-      )}
 
       <div className="game-wrapper">
         <canvas
@@ -524,7 +441,7 @@ export default function DogGame() {
                 <input
                   type="text"
                   className="nickname-input"
-                  placeholder="Enter your nickname (max 15 chars)"
+                  placeholder="Enter your nickname (optional)"
                   value={nickname}
                   onChange={(e) => setNickname(e.target.value)}
                   maxLength={15}
@@ -551,24 +468,15 @@ export default function DogGame() {
                 <p>
                   <strong>Time:</strong> {formatTime(timeElapsed)}
                 </p>
+                {nickname.trim() && (
+                  <p>
+                    <strong>Player:</strong> {nickname}
+                  </p>
+                )}
               </div>
-              {nickname.trim() && (
-                <p className="score-saved">Score saved as {nickname}!</p>
-              )}
-              <div className="game-over-actions">
-                <button className="btn btn-primary" onClick={resetGame}>
-                  Play Again
-                </button>
-                <button
-                  className="btn btn-secondary"
-                  onClick={() => {
-                    resetGame()
-                    setShowScoreboard(true)
-                  }}
-                >
-                  View Scoreboard
-                </button>
-              </div>
+              <button className="btn btn-primary" onClick={resetGame}>
+                Play Again
+              </button>
             </div>
           </div>
         )}
