@@ -1,5 +1,5 @@
 const GOFUNDME_VIDEO = 'https://www.youtube.com/embed/Tuw8hxrFBH8'
-const COOKING_VIDEO = 'https://www.youtube.com/embed/L41L8J8bR2w'
+const COOKING_VIDEO = 'https://www.youtube.com/embed/9QCKe-lQQOo'
 
 export default function Home() {
   return (
