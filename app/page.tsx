@@ -1,3 +1,5 @@
+import DogGame from './components/DogGame'
+
 const GOFUNDME_VIDEO = 'https://www.youtube.com/embed/Tuw8hxrFBH8'
 const COOKING_VIDEO = 'https://www.youtube.com/embed/L41L8J8bR2w'
 
@@ -102,6 +104,10 @@ export default function Home() {
             <div>Kid-and-cat friendly kitchen tips—because the whole crew helps.</div>
           </div>
         </div>
+      </section>
+
+      <section id="game" className="card" aria-labelledby="game-title">
+        <DogGame />
       </section>
 
       <footer className="footer">

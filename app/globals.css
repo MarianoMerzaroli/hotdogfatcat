@@ -242,6 +242,86 @@ section {
   text-decoration: underline;
 }
 
+/* Game Styles */
+.game-container {
+  width: 100%;
+}
+
+.game-header {
+  margin-bottom: 24px;
+}
+
+.game-header h2 {
+  font-size: 28px;
+  color: var(--dark);
+  letter-spacing: -0.4px;
+  margin: 12px 0 8px;
+}
+
+.game-header p {
+  color: #4c3528;
+  margin-top: 8px;
+}
+
+.game-wrapper {
+  position: relative;
+  width: 100%;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #2b1c16;
+  box-shadow: 0 12px 34px rgba(0, 0, 0, 0.12);
+  min-height: 320px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.game-canvas {
+  width: 100%;
+  max-width: 800px;
+  height: auto;
+  aspect-ratio: 800 / 320;
+  display: block;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  margin: 0 auto;
+}
+
+.game-start-screen {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(233, 196, 152, 0.95), rgba(168, 66, 45, 0.15));
+  z-index: 10;
+}
+
+.game-start-content {
+  text-align: center;
+  padding: 32px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+  max-width: 400px;
+}
+
+.game-dog-icon {
+  font-size: 64px;
+  margin-bottom: 16px;
+}
+
+.game-start-content h3 {
+  font-size: 24px;
+  color: var(--dark);
+  margin-bottom: 12px;
+}
+
+.game-start-content p {
+  color: #4c3528;
+  margin-bottom: 20px;
+}
+
 @media (max-width: 960px) {
   main {
     padding: 24px 16px 40px;
@@ -259,6 +339,15 @@ section {
   .section-heading {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .game-canvas {
+    width: 100%;
+    height: auto;
+  }
+
+  .game-wrapper {
+    min-height: 280px;
   }
 }
 
