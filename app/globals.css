@@ -263,6 +263,10 @@ section {
   margin-top: 8px;
 }
 
+.game-header-actions {
+  margin-top: 16px;
+}
+
 .game-wrapper {
   position: relative;
   width: 100%;
@@ -278,9 +282,9 @@ section {
 
 .game-canvas {
   width: 100%;
-  max-width: 800px;
+  max-width: 1000px;
   height: auto;
-  aspect-ratio: 800 / 320;
+  aspect-ratio: 1000 / 320;
   display: block;
   image-rendering: pixelated;
   image-rendering: crisp-edges;
@@ -322,6 +326,128 @@ section {
   margin-bottom: 20px;
 }
 
+.nickname-input-wrapper {
+  margin: 20px 0;
+  width: 100%;
+}
+
+.nickname-input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid rgba(169, 66, 45, 0.2);
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+  color: var(--dark);
+  background: rgba(255, 255, 255, 0.95);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.nickname-input:focus {
+  outline: none;
+  border-color: var(--rust);
+  box-shadow: 0 0 0 4px rgba(169, 66, 45, 0.1);
+}
+
+.nickname-input::placeholder {
+  color: #8b7355;
+  font-weight: 400;
+}
+
+.game-stats {
+  margin: 20px 0;
+  padding: 16px;
+  background: rgba(233, 196, 152, 0.2);
+  border-radius: 12px;
+}
+
+.game-stats p {
+  margin: 8px 0;
+  font-size: 18px;
+  color: var(--dark);
+}
+
+.game-stats strong {
+  color: var(--rust);
+}
+
+.score-saved {
+  color: var(--rust);
+  font-weight: 600;
+  margin-top: 12px;
+}
+
+.game-over-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.scoreboard-card {
+  background: var(--card);
+  border: 1px solid rgba(26, 15, 11, 0.06);
+  border-radius: 20px;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 16px 50px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(8px);
+}
+
+.scoreboard-card h3 {
+  font-size: 24px;
+  color: var(--dark);
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.scoreboard-empty {
+  text-align: center;
+  color: #8b7355;
+  padding: 20px;
+}
+
+.scoreboard-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.scoreboard-item {
+  display: grid;
+  grid-template-columns: 40px 1fr auto auto;
+  gap: 12px;
+  align-items: center;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 12px;
+  border: 1px solid rgba(26, 15, 11, 0.06);
+}
+
+.scoreboard-rank {
+  font-weight: 700;
+  color: var(--rust);
+  font-size: 18px;
+}
+
+.scoreboard-name {
+  font-weight: 600;
+  color: var(--dark);
+}
+
+.scoreboard-steaks {
+  font-weight: 600;
+  color: #8b7355;
+}
+
+.scoreboard-time {
+  font-weight: 700;
+  color: var(--rust);
+  font-family: 'Courier New', monospace;
+}
+
 @media (max-width: 960px) {
   main {
     padding: 24px 16px 40px;
@@ -348,6 +474,25 @@ section {
 
   .game-wrapper {
     min-height: 280px;
+  }
+
+  .scoreboard-item {
+    grid-template-columns: 30px 1fr;
+    gap: 8px;
+  }
+
+  .scoreboard-steaks,
+  .scoreboard-time {
+    grid-column: 2;
+    font-size: 14px;
+  }
+
+  .game-over-actions {
+    flex-direction: column;
+  }
+
+  .game-over-actions .btn {
+    width: 100%;
   }
 }
 
