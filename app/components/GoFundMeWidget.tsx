@@ -1,87 +1,117 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
-
-declare global {
-  interface Window {
-    gfm?: {
-      processEmbeds?: () => void
-    }
-  }
-}
+import { useEffect, useState } from 'react'
 
 export default function GoFundMeWidget() {
-  const containerRef = useRef<HTMLDivElement>(null)
+  const [useFallback, setUseFallback] = useState(false)
 
   useEffect(() => {
-    const loadEmbed = () => {
-      // Check if script is already loaded
+    // Function to load and process the embed
+    const initEmbed = () => {
+      // Check if script already exists
       const existingScript = document.querySelector('script[src="https://www.gofundme.com/static/js/embed.js"]')
       
       if (existingScript) {
-        // Script exists, try to process embeds
-        if (window.gfm && typeof window.gfm.processEmbeds === 'function') {
-          window.gfm.processEmbeds()
+        // Script exists, try to trigger processing
+        if ((window as any).gfm && typeof (window as any).gfm.processEmbeds === 'function') {
+          (window as any).gfm.processEmbeds()
         } else {
-          // Wait a bit for script to initialize
+          // Wait a bit and try again
           setTimeout(() => {
-            if (window.gfm && typeof window.gfm.processEmbeds === 'function') {
-              window.gfm.processEmbeds()
+            if ((window as any).gfm && typeof (window as any).gfm.processEmbeds === 'function') {
+              (window as any).gfm.processEmbeds()
+            } else {
+              // Fallback to iframe after 2 seconds
+              setTimeout(() => setUseFallback(true), 2000)
             }
           }, 500)
         }
         return
       }
 
-      // Load the script
+      // Create and load the script
       const script = document.createElement('script')
       script.src = 'https://www.gofundme.com/static/js/embed.js'
+      script.defer = true
       script.async = true
       
       script.onload = () => {
-        // Wait for the script to initialize, then process embeds
-        setTimeout(() => {
-          if (window.gfm && typeof window.gfm.processEmbeds === 'function') {
-            window.gfm.processEmbeds()
-          } else {
-            // Try again after a longer delay
-            setTimeout(() => {
-              if (window.gfm && typeof window.gfm.processEmbeds === 'function') {
-                window.gfm.processEmbeds()
-              }
-            }, 1000)
+        // Multiple attempts to process embeds
+        const tryProcess = () => {
+          if ((window as any).gfm && typeof (window as any).gfm.processEmbeds === 'function') {
+            (window as any).gfm.processEmbeds()
+            return true
           }
-        }, 100)
+          return false
+        }
+
+        // Try immediately
+        if (!tryProcess()) {
+          // Try after short delay
+          setTimeout(() => {
+            if (!tryProcess()) {
+              // Try after longer delay
+              setTimeout(() => {
+                if (!tryProcess()) {
+                  // Use fallback iframe
+                  setUseFallback(true)
+                }
+              }, 1500)
+            }
+          }, 500)
+        }
       }
-      
+
       script.onerror = () => {
-        console.error('Failed to load GoFundMe embed script')
+        console.error('GoFundMe script failed to load, using fallback')
+        setUseFallback(true)
       }
-      
-      document.body.appendChild(script)
+
+      document.head.appendChild(script)
     }
 
-    // Wait for DOM to be ready
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', loadEmbed)
+    // Initialize
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+      initEmbed()
     } else {
-      loadEmbed()
+      window.addEventListener('load', initEmbed)
     }
 
-    // Also try processing after a delay as fallback
-    const timeoutId = setTimeout(() => {
-      if (window.gfm && typeof window.gfm.processEmbeds === 'function') {
-        window.gfm.processEmbeds()
-      }
-    }, 2000)
+    // Also try after component mounts
+    const timeout = setTimeout(initEmbed, 100)
 
     return () => {
-      clearTimeout(timeoutId)
+      clearTimeout(timeout)
     }
   }, [])
 
+  // Fallback: Use direct link if embed doesn't work
+  if (useFallback) {
+    return (
+      <div className="gfm-embed-wrapper" style={{ textAlign: 'center', padding: '40px' }}>
+        <a
+          href="https://www.gofundme.com/f/join-our-mission-to-keep-refugee-dogs-fed-safe-and-loved"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            display: 'inline-block',
+            padding: '16px 32px',
+            backgroundColor: '#00b964',
+            color: 'white',
+            textDecoration: 'none',
+            borderRadius: '8px',
+            fontWeight: 'bold',
+            fontSize: '18px'
+          }}
+        >
+          Support on GoFundMe
+        </a>
+      </div>
+    )
+  }
+
   return (
-    <div ref={containerRef}>
+    <div className="gfm-embed-wrapper">
       <div
         className="gfm-embed"
         data-url="https://www.gofundme.com/f/join-our-mission-to-keep-refugee-dogs-fed-safe-and-loved/widget/medium?sharesheet=undefined&attribution_id=sl:07ae06e4-2e26-4813-8985-5fa86c25eb2a"
