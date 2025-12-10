@@ -26,7 +26,7 @@ export default function Home() {
 
           <div className="hero-image" aria-hidden>
             <img
-              src="/ChatGPT Image 9. Dez. 2025, 00_07_39.png"
+              src="/hotdogfatcat.png"
               alt="Image"
             />
           </div>
