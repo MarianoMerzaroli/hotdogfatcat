@@ -42,7 +42,7 @@ export default function Home() {
           <p>
             Join our mission to keep refugee dogs fed, safe, and loved. We cook,
             we share, and we channel every episode into direct support for pups
-            who need a warm meal.
+            who need a meal. Donations go to street dogs and shelters in Montenegro.
           </p>
         </div>
         <div className="video-shell" role="group" aria-label="Gofundme story video">
