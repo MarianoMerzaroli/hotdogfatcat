@@ -1,7 +1,7 @@
 import GoFundMeWidget from './components/GoFundMeWidget'
 
-const GOFUNDME_VIDEO = 'https://www.youtube.com/embed/Tuw8hxrFBH8'
-const COOKING_VIDEO = 'https://www.youtube.com/embed/9QCKe-lQQOo'
+const GOFUNDME_VIDEO = 'https://www.youtube.com/embed/9bPBtXFdDTQ?si=bfij9maJIfqMzVCP'
+const COOKING_VIDEO = 'https://www.youtube.com/embed/FJfhBfbkBu4?si=N_qWrBAAlvY-5IbM'
 
 export default function Home() {
   return (
