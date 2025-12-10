@@ -1,3 +1,5 @@
+import GoFundMeWidget from './components/GoFundMeWidget'
+
 const GOFUNDME_VIDEO = 'https://www.youtube.com/embed/Tuw8hxrFBH8'
 const COOKING_VIDEO = 'https://www.youtube.com/embed/9QCKe-lQQOo'
 
@@ -53,6 +55,7 @@ export default function Home() {
             allowFullScreen
           />
         </div>
+        <GoFundMeWidget />
         <div className="feature-grid">
           <div className="feature">
             <span className="dot" aria-hidden />
