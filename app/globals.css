@@ -187,6 +187,7 @@ section {
   overflow: hidden;
   box-shadow: 0 12px 34px rgba(0, 0, 0, 0.12);
   background: #000;
+  margin-bottom: 10px;
 }
 
 .video-shell iframe {
@@ -198,7 +199,7 @@ section {
 }
 
 .gfm-embed-wrapper {
-  margin: 24px 0;
+  margin: 8px 0;
   min-height: 200px;
   width: 100%;
 }
@@ -212,7 +213,7 @@ section {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 16px;
-  margin-top: 18px;
+  margin-top: 1px;
 }
 
 .feature {

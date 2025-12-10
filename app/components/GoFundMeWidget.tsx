@@ -104,7 +104,7 @@ export default function GoFundMeWidget() {
             fontSize: '18px'
           }}
         >
-          Support on GoFundMe
+          Donate on GoFundMe
         </a>
       </div>
     )
