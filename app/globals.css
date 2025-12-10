@@ -204,6 +204,17 @@ section {
   width: 100%;
 }
 
+.gfm-donate-button {
+  display: inline-block;
+  padding: 16px 32px;
+  background-color: #00b964;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 18px;
+}
+
 .gfm-embed {
   width: 100%;
   min-height: 200px;
@@ -272,6 +283,15 @@ section {
   .section-heading {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .gfm-donate-button {
+    padding: 12px 24px;
+    font-size: 16px;
+  }
+
+  .gfm-embed-wrapper {
+    padding: 24px 16px !important;
   }
 }
 

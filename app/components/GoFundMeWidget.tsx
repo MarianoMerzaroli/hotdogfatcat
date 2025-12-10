@@ -93,16 +93,7 @@ export default function GoFundMeWidget() {
           href="https://www.gofundme.com/f/join-our-mission-to-keep-refugee-dogs-fed-safe-and-loved"
           target="_blank"
           rel="noopener noreferrer"
-          style={{
-            display: 'inline-block',
-            padding: '16px 32px',
-            backgroundColor: '#00b964',
-            color: 'white',
-            textDecoration: 'none',
-            borderRadius: '8px',
-            fontWeight: 'bold',
-            fontSize: '18px'
-          }}
+          className="gfm-donate-button"
         >
           Donate on GoFundMe
         </a>
