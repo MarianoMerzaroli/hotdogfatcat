@@ -26,8 +26,8 @@ export default function Home() {
 
           <div className="hero-image" aria-hidden>
             <img
-              src="/hotdogfatcat.png"
-              alt="Image"
+              src="/logo_hotdogfatcat.svg"
+              alt="hotdogfatcat logo"
             />
           </div>
         </div>
