@@ -3,6 +3,9 @@ import DogGame from './components/DogGame'
 
 const GOFUNDME_VIDEO = 'https://www.youtube.com/embed/9bPBtXFdDTQ?si=bfij9maJIfqMzVCP&vq=hd1080'
 const COOKING_VIDEO = 'https://www.youtube.com/embed/FJfhBfbkBu4?si=N_qWrBAAlvY-5IbM&vq=hd1080'
+const SHORT_VIDEO_1 = 'https://www.youtube.com/embed/rM3cU-p4_gk'
+const SHORT_VIDEO_2 = 'https://www.youtube.com/embed/mK9hYxFp_E0'
+const SHORT_VIDEO_3 = 'https://www.youtube.com/embed/7tAo2E-nYmA'
 
 export default function Home() {
   return (
@@ -69,6 +72,41 @@ export default function Home() {
           <div className="feature">
             <span className="dot" aria-hidden />
             <div>Monthly transparency reports and behind-the-scenes kitchen cams.</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="shorts" className="card" aria-labelledby="shorts-title">
+        <div className="section-heading">
+          <div>
+            <span className="pill">Shorts</span>
+            <h2 id="shorts-title">Quick bites</h2>
+          </div>
+        </div>
+        <div className="shorts-grid">
+          <div className="video-shell" role="group" aria-label="YouTube Short video 1">
+            <iframe
+              src={SHORT_VIDEO_1}
+              title="YouTube Short 1"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+            />
+          </div>
+          <div className="video-shell" role="group" aria-label="YouTube Short video 2">
+            <iframe
+              src={SHORT_VIDEO_2}
+              title="YouTube Short 2"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+            />
+          </div>
+          <div className="video-shell" role="group" aria-label="YouTube Short video 3">
+            <iframe
+              src={SHORT_VIDEO_3}
+              title="YouTube Short 3"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+            />
           </div>
         </div>
       </section>

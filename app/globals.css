@@ -228,6 +228,18 @@ section {
   margin-top: 1px;
 }
 
+.shorts-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 24px;
+}
+
+.shorts-grid .video-shell {
+  padding-top: 177.78%; /* 9:16 aspect ratio for vertical videos */
+  margin-bottom: 0;
+}
+
 .feature {
   padding: 14px 16px;
   border-radius: 12px;
@@ -559,6 +571,11 @@ section {
 
   .game-over-actions .btn {
     width: 100%;
+  }
+
+  .shorts-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
   }
 }
 
