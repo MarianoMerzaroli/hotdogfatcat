@@ -169,21 +169,32 @@ hotdogfatcat/
 
 The site uses **Google Analytics 4** and **Silktide Consent Manager** with **Google Consent Mode v2** so analytics run only after consent.
 
-1. **Google Analytics (optional)**  
-   - Create a GA4 property and copy the Measurement ID (e.g. `G-XXXXXXXXXX`).  
-   - Add to `.env.local`:
-     ```
-     NEXT_PUBLIC_GA_MEASUREMENT_ID=G-XXXXXXXXXX
-     ```
-   - If this is not set, the cookie banner still works; GA and gtag are not loaded.
+### For Local Development
 
-2. **Cookie policy URL**  
-   - The banner links to your cookie/privacy page. Default: `/privacy/`.  
-   - Override with:
-     ```
-     NEXT_PUBLIC_COOKIE_POLICY_URL=https://yoursite.com/privacy/
-     ```
-   - A minimal placeholder exists at `app/privacy/page.tsx`; replace it with your full policy.
+Create a `.env.local` file in the project root:
+
+```bash
+NEXT_PUBLIC_GA_MEASUREMENT_ID=G-XXXXXXXXXX
+NEXT_PUBLIC_COOKIE_POLICY_URL=https://yoursite.com/privacy/
+```
+
+### For GitHub Pages Deployment
+
+Since GitHub Pages doesn't support `.env.local` files, use **GitHub Secrets**:
+
+1. **Go to your repository** → **Settings** → **Secrets and variables** → **Actions**
+2. **Click "New repository secret"** and add:
+
+   - **Name:** `NEXT_PUBLIC_GA_MEASUREMENT_ID`  
+     **Value:** Your Google Analytics Measurement ID (e.g., `G-XXXXXXXXXX`)
+   
+   - **Name:** `NEXT_PUBLIC_COOKIE_POLICY_URL` (optional)  
+     **Value:** Your cookie policy URL (e.g., `https://yoursite.com/privacy/`)  
+     *If not set, defaults to `/privacy/`*
+
+3. The GitHub Actions workflow will automatically use these secrets during the build.
+
+**Note:** If `NEXT_PUBLIC_GA_MEASUREMENT_ID` is not set, the cookie banner still works; GA and gtag are not loaded. A minimal placeholder exists at `app/privacy/page.tsx`; replace it with your full policy.
 
 3. **Banner behaviour**  
    - Categories: Necessary (always on), Analytics, Advertising.  

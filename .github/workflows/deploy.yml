@@ -35,6 +35,8 @@ jobs:
         run: npm run build
         env:
           NODE_ENV: production
+          NEXT_PUBLIC_GA_MEASUREMENT_ID: ${{ secrets.NEXT_PUBLIC_GA_MEASUREMENT_ID }}
+          NEXT_PUBLIC_COOKIE_POLICY_URL: ${{ secrets.NEXT_PUBLIC_COOKIE_POLICY_URL }}
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
