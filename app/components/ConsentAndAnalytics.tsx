@@ -8,21 +8,21 @@ function escapeForJsString(s: string): string {
 }
 
 function getConsentDefaultScript(): string {
-  return `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
-gtag('js',new Date());
-(function(){
+  return `(function(){
   var n=typeof localStorage!=='undefined'&&localStorage.getItem('silktideCookieChoice_necessary')==='true';
   var a=typeof localStorage!=='undefined'&&localStorage.getItem('silktideCookieChoice_analytics')==='true';
   var m=typeof localStorage!=='undefined'&&localStorage.getItem('silktideCookieChoice_advertising')==='true';
-  gtag('consent','default',{
-    analytics_storage:a?'granted':'denied',
-    ad_storage:m?'granted':'denied',
-    ad_user_data:m?'granted':'denied',
-    ad_personalization:m?'granted':'denied',
-    functionality_storage:n?'granted':'denied',
-    security_storage:n?'granted':'denied',
-    wait_for_update:500
-  });
+  if(typeof gtag==='function'){
+    gtag('consent','default',{
+      analytics_storage:a?'granted':'denied',
+      ad_storage:m?'granted':'denied',
+      ad_user_data:m?'granted':'denied',
+      ad_personalization:m?'granted':'denied',
+      functionality_storage:n?'granted':'denied',
+      security_storage:n?'granted':'denied',
+      wait_for_update:500
+    });
+  }
 })();`
 }
 
@@ -60,6 +60,8 @@ function getSilktideConfigScript(cookiePolicyUrl: string): string {
 export function ConsentAndAnalyticsHead() {
   const cookiePolicyUrl =
     (typeof process !== 'undefined' && process.env?.NEXT_PUBLIC_COOKIE_POLICY_URL) || '/privacy/'
+  const gaId =
+    typeof process !== 'undefined' ? process.env?.NEXT_PUBLIC_GA_MEASUREMENT_ID : undefined
 
   return (
     <>
@@ -95,9 +97,33 @@ export function ConsentAndAnalyticsHead() {
           `,
         }}
       />
-      <script
-        dangerouslySetInnerHTML={{ __html: getConsentDefaultScript() }}
-      />
+      {/* Google Analytics gtag.js - matching Google's exact format for detection */}
+      {gaId && (
+        <>
+          {/* Load gtag.js script with async attribute (hoisted to head by Next.js) */}
+          <Script
+            src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
+            strategy="beforeInteractive"
+          />
+          {/* Combined initialization, consent mode, and config (executes in order) */}
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                ${getConsentDefaultScript()}
+                gtag('config', '${gaId.replace(/'/g, "\\'")}');
+              `,
+            }}
+          />
+        </>
+      )}
+      {!gaId && (
+        <script
+          dangerouslySetInnerHTML={{ __html: getConsentDefaultScript() }}
+        />
+      )}
       <script src={SILKTIDE_JS} />
       <script
         dangerouslySetInnerHTML={{ __html: getSilktideConfigScript(cookiePolicyUrl) }}
@@ -107,22 +133,7 @@ export function ConsentAndAnalyticsHead() {
 }
 
 export function ConsentAndAnalyticsBody() {
-  const gaId =
-    typeof process !== 'undefined' ? process.env?.NEXT_PUBLIC_GA_MEASUREMENT_ID : undefined
-
-  if (!gaId) return null
-
-  return (
-    <>
-      <Script
-        src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
-        strategy="afterInteractive"
-      />
-      <script
-        dangerouslySetInnerHTML={{
-          __html: `gtag('config','${gaId.replace(/'/g, "\\'")}');`,
-        }}
-      />
-    </>
-  )
+  // Google Analytics is now loaded in the head, so this component is no longer needed
+  // Keeping it for potential future use or other body scripts
+  return null
 }
