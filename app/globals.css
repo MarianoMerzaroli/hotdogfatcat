@@ -9,6 +9,17 @@
   color-scheme: light;
 }
 
+/* Silktide Consent Manager Color Customization */
+#stcm-wrapper {
+  --primaryColor: var(--rust);
+  --backgroundColor: var(--cream);
+  --textColor: var(--dark);
+  --iconColor: var(--cream);
+  --iconBackgroundColor: var(--rust);
+  --backdropBackgroundColor: rgba(26, 15, 11, 0.4);
+  --backdropBackgroundBlur: 4px;
+}
+
 * {
   box-sizing: border-box;
   padding: 0;

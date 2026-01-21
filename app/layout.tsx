@@ -1,5 +1,9 @@
 import type { Metadata } from 'next'
 import Script from 'next/script'
+import {
+  ConsentAndAnalyticsBody,
+  ConsentAndAnalyticsHead,
+} from './components/ConsentAndAnalytics'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -15,7 +19,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
+        <ConsentAndAnalyticsHead />
         {children}
+        <ConsentAndAnalyticsBody />
         <Script
           src="https://www.gofundme.com/static/js/embed.js"
           strategy="afterInteractive"

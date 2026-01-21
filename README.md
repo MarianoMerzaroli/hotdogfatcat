@@ -165,6 +165,31 @@ hotdogfatcat/
 └── README.md             # This file
 ```
 
+## Analytics & Cookie Consent
+
+The site uses **Google Analytics 4** and **Silktide Consent Manager** with **Google Consent Mode v2** so analytics run only after consent.
+
+1. **Google Analytics (optional)**  
+   - Create a GA4 property and copy the Measurement ID (e.g. `G-XXXXXXXXXX`).  
+   - Add to `.env.local`:
+     ```
+     NEXT_PUBLIC_GA_MEASUREMENT_ID=G-XXXXXXXXXX
+     ```
+   - If this is not set, the cookie banner still works; GA and gtag are not loaded.
+
+2. **Cookie policy URL**  
+   - The banner links to your cookie/privacy page. Default: `/privacy/`.  
+   - Override with:
+     ```
+     NEXT_PUBLIC_COOKIE_POLICY_URL=https://yoursite.com/privacy/
+     ```
+   - A minimal placeholder exists at `app/privacy/page.tsx`; replace it with your full policy.
+
+3. **Banner behaviour**  
+   - Categories: Necessary (always on), Analytics, Advertising.  
+   - Analytics and Advertising are off until the user accepts.  
+   - Users can reopen preferences via the cookie icon.
+
 ## Customization
 
 ### Adding Pages
