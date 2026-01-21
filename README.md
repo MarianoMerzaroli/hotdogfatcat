@@ -228,11 +228,49 @@ Create new files in the `app` directory:
 - Ensure workflow completed successfully
 - Wait a few minutes for GitHub Pages to update
 
-### Custom domain not working
-- Verify DNS records are correct using [whatsmydns.net](https://www.whatsmydns.net)
-- Ensure you added the custom domain in GitHub Pages settings
-- Wait up to 24 hours for DNS propagation
-- Check that SSL certificate is provisioned (may take time after DNS)
+### Custom domain not working / SSL certificate errors
+
+**Common issues and solutions:**
+
+1. **"Not a valid certificate" error:**
+   - This usually means the SSL certificate hasn't been provisioned yet
+   - GitHub automatically provisions SSL certificates, but it can take **up to 24 hours** after DNS is correctly configured
+   - Make sure DNS records are correct first (see below)
+
+2. **Verify DNS configuration:**
+   - For `www.hotdogfatcat.com`, you need a **CNAME record**:
+     ```
+     Type: CNAME
+     Host: www
+     Value: YOUR_USERNAME.github.io
+     TTL: 3600
+     ```
+   - For `hotdogfatcat.com` (apex domain), you need **4 A records**:
+     ```
+     Type: A, Host: @, Value: 185.199.108.153
+     Type: A, Host: @, Value: 185.199.109.153
+     Type: A, Host: @, Value: 185.199.110.153
+     Type: A, Host: @, Value: 185.199.111.153
+     ```
+   - Check DNS propagation at [whatsmydns.net](https://www.whatsmydns.net)
+
+3. **Configure domain in GitHub:**
+   - Go to repository → **Settings** → **Pages**
+   - Under **Custom domain**, enter: `www.hotdogfatcat.com`
+   - Check **Enforce HTTPS** (will be available after SSL is provisioned)
+   - The `public/CNAME` file should contain: `www.hotdogfatcat.com`
+
+4. **Wait for SSL provisioning:**
+   - After DNS is correct, GitHub will automatically provision SSL
+   - This can take **15 minutes to 24 hours**
+   - You'll see a green checkmark in GitHub Pages settings when SSL is ready
+   - Until then, you may see certificate errors - this is normal
+
+5. **Force SSL certificate renewal (if stuck):**
+   - Remove the custom domain from GitHub Pages settings
+   - Wait 5 minutes
+   - Re-add the domain
+   - This triggers a new SSL certificate request
 
 ### Build errors
 - Ensure Node.js version is 18+ (GitHub Actions uses Node 20)
